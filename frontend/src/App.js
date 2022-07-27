@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from "react-toastify";
+import { Login } from "./pages/Login";
+import { useAuth } from "./helpers/hooks/useAuth";
+import { AuthProvider } from "./helpers/providers/AuthProvider";
+import { GlobalStyle } from "./styles/global";
+import 'react-toastify/dist/ReactToastify.css';
+import { LogoutButton } from './components/LogoutButton';
 
 function App() {
+  const { user } = useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={user ? <LogoutButton /> : <Login />} />
+          <Route path="/login" element={user ? <LogoutButton /> : <Login />} />
+        </Routes>
+        <GlobalStyle />
+        <ToastContainer />
+      </Router>
+    </AuthProvider>
   );
 }
 
