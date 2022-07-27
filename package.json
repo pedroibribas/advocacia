@@ -1,7 +1,6 @@
 {
   "name": "advocacia",
   "version": "1.0.0",
-  "proxy": "http://localhost:5000",
   "description": "Um aplicativo para gerenciamento de escritório de advocacia",
   "main": "server.js",
   "scripts": {
