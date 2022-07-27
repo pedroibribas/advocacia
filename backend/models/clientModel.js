@@ -2,14 +2,17 @@ const mongoose = require('mongoose');
 
 const clientSchema = mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: {
       firstName: {
         type: String,
-        required: true,
       },
       lastName: {
         type: String,
-        required: true,
       },
     },
     securityNumber: {
@@ -17,11 +20,11 @@ const clientSchema = mongoose.Schema(
       default: 'Não informado'
     },
     registerNumber: {
-      number: {
+      rgNumber: {
         type: String,
         default: 'Não informado'
       },
-      origin: {
+      rgOrigin: {
         type: String,
         default: 'Não informado'
       }
@@ -29,15 +32,18 @@ const clientSchema = mongoose.Schema(
     birth: {
       birthDay: {
         type: Number,
-        default: 00,
+        default: 0,
+        required: false
       },
       birthMonth: {
         type: Number,
-        default: 00,
+        default: 0,
+        required: false
       },
       birthYear: {
         type: Number,
-        default: 00,
+        default: 0,
+        required: false
       },
     },
     nationality: {

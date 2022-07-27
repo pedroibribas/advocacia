@@ -1,12 +1,13 @@
 const asyncHandler = require('express-async-handler');
 const mongoose = require('mongoose');
 const Client = require('../models/clientModel');
+const User = require('../models/userModel');
 
 // Get clients | GET /api/clients | Private
 const getClients = asyncHandler(async (req, res) => {
-  const clients = await Client.find()
-  res.status(200).json(clients)
-})
+  const clients = await Client.find({ user: req.user.id });
+  res.status(200).json(clients);
+});
 
 // Register client | POST /api/clients | Private
 const setClient = asyncHandler(async (req, res) => {
@@ -14,7 +15,8 @@ const setClient = asyncHandler(async (req, res) => {
     firstName,
     lastName,
     securityNumber,
-    registerNumber,
+    rgNumber,
+    rgOrigin,
     birthDay,
     birthMonth,
     birthYear,
@@ -40,18 +42,17 @@ const setClient = asyncHandler(async (req, res) => {
     throw new Error('É necessário um nome e um sobrenome para efetuar a solicitação');
   };
 
-  if (firstName.length > 15 || lastName.length > 15) {
-    res.status(400);
-    throw new Error('O nome ou o sobrenome não podem ter mais do que 15 caracteres');
-  };
-
   const data = {
+    user: req.user.id,
     name: {
       firstName,
       lastName
     },
     securityNumber,
-    registerNumber,
+    registerNumber: {
+      rgNumber,
+      rgOrigin
+    },
     birth: {
       birthDay,
       birthMonth,
@@ -80,6 +81,7 @@ const setClient = asyncHandler(async (req, res) => {
   };
 
   const client = await Client.create(data);
+
   const fullname = client.name.firstName + ' ' + client.name.lastName;
 
   res.status(201).json({ message: `O cadastro de ${fullname} foi criado` });
@@ -87,37 +89,6 @@ const setClient = asyncHandler(async (req, res) => {
 
 // Get client | GET /api/clients/:id | Private
 const getClient = asyncHandler(async (req, res) => {
-  const client = await Client.findById(req.params.id)
-  res.status(200).json(client)
-})
-
-// Update client | PATCH /api/clients/:id | Private
-const updateClient = asyncHandler(async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    securityNumber,
-    registerNumber,
-    birthDay,
-    birthMonth,
-    birthYear,
-    nationality,
-    street,
-    addressNumber,
-    cityArea,
-    city,
-    country,
-    postalCode,
-    countryCode,
-    areaCode,
-    phoneNumber,
-    email,
-    civilStatus,
-    job,
-    income,
-    description
-  } = req.body;
-
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400);
     throw new Error('Formato de id incorreto');
@@ -127,55 +98,64 @@ const updateClient = asyncHandler(async (req, res) => {
 
   if (!client) {
     res.status(400);
-    throw new Error('Nenhum cliente encontrado');
+    throw new Error("O cadastro não foi encontrado");
   };
 
-  if (firstName?.length > 15 || lastName?.length > 15) {
-    res.status(400);
-    throw new Error('O nome ou o sobrenome não podem ter mais do que 15 caracteres');
+  const user = await User.findById(req.user.id);
+
+  if (client.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error('O usuário não está autorizado');
   };
 
-  const data = {
-    name: {
-      firstName,
-      lastName
-    },
-    securityNumber,
-    registerNumber,
-    birth: {
-      birthDay,
-      birthMonth,
-      birthYear
-    },
-    nationality,
-    address: {
-      street,
-      cityArea,
-      addressNumber,
-      city,
-      country,
-      postalCode,
-    },
-    phones: {
-      countryCode,
-      areaCode,
-      phoneNumber
-    }
-    ,
-    email,
-    civilStatus,
-    job,
-    income,
-    description
-  };
-
-  const updatedClient = await Client.findByIdAndUpdate(req.params.id, data, {
-    new: true,
-  });
-
-  res.status(200).json({ message: `O cadastro foi atualizado`, data: updatedClient });
+  res.status(200).json(client);
 });
 
+// Update client | PATCH /api/clients/:id | Private
+const updateClient = asyncHandler(async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    res.status(400);
+    throw new Error('Formato de id incorreto');
+  }
+
+  const client = await Client.findById(req.params.id);
+  const user = await User.findById(req.user.id);
+
+  if (client.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error('O usuário não está autorizado');
+  };
+
+  if (req.body.firstName) client.name.firstName = req.body.firstName;
+  if (req.body.lastName) client.name.lastName = req.body.lastName;
+  if (req.body.rgNumber) client.register.rgNumber = req.body.rgNumber;
+  if (req.body.rgOrigin) client.register.rgOrigin = req.body.rgOrigin;
+  if (req.body.birthDay) client.birth.birthDay = req.body.birthDay;
+  if (req.body.birthMonth) client.birth.birthMonth = req.body.birthMonth;
+  if (req.body.birthYear) client.birth.birthYear = req.body.birthYear;
+  if (req.body.street) client.address.street = req.body.street;
+  if (req.body.addressNumber) client.address.addressNumber = req.body.addressNumber;
+  if (req.body.cityArea) client.address.cityArea = req.body.cityArea;
+  if (req.body.city) client.address.city = req.body.city;
+  if (req.body.country) client.address.country = req.body.country;
+  if (req.body.postalCode) client.address.postalCode = req.body.postalCode;
+  if (req.body.countryCode) client.phone.countryCode = req.body.countryCode;
+  if (req.body.areaCode) client.phone.areaCode = req.body.areaCode;
+  if (req.body.phoneNumber) client.phone.phoneNumber = req.body.phoneNumber;
+  if (req.body.securityNumber) client.securityNumber = req.body.securityNumber;
+  if (req.body.nationality) client.nationality = req.body.nationality;
+  if (req.body.email) client.email = req.body.email;
+  if (req.body.civilStatus) client.civilStatus = req.body.civilStatus;
+  if (req.body.job) client.job = req.body.job;
+  if (req.body.income) client.income = req.body.income;
+  if (req.body.description) client.description = req.body.description;
+
+  await client.save();
+
+  const fullname = client.name.firstName + ' ' + client.name.lastName;
+
+  res.status(201).json({ message: `O cadastro de ${fullname} foi criado` });
+});
 
 // Delete client | DELETE /api/clients/:id | Private
 const deleteClient = asyncHandler(async (req, res) => {
@@ -189,6 +169,13 @@ const deleteClient = asyncHandler(async (req, res) => {
   if (!client) {
     res.status(400);
     throw new Error('Nenhum cliente encontrado');
+  };
+
+  const user = await User.findById(req.user.id);
+
+  if (client.user.toString() !== user.id) {
+    res.status(401);
+    throw new Error('O usuário não está autorizado');
   };
 
   const fullname = client.name.firstName + ' ' + client.name.lastName;
