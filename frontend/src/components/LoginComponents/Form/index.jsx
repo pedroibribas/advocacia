@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUserService } from "../../../api/services/user";
-import { LoginFulfilled, LoginPending, LoginRejected } from "../../../helpers/actions/AuthActions";
+import { LoginPending } from "../../../helpers/actions/AuthActions";
 import { useAuth } from "../../../helpers/hooks/useAuth";
-import { formatErrMessage } from "../../../helpers/utils/formatErrMessage";
 import { Loader } from "../../Loader";
 import { Container, FormControl, FormGroup } from "./styles";
 
 export const Form = () => {
-  const { user, isSuccess, isLoading, isError, message, dispatch } = useAuth();
+  const { user, isSuccess, isLoading, isError, message, dispatch, loginUser } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -37,18 +35,12 @@ export const Form = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const userData = {
-      email,
-      password
-    };
+    const userData = { email, password };
 
     dispatch(LoginPending());
+    loginUser(userData);
 
-    loginUserService(userData)
-      .then(data => dispatch(LoginFulfilled(data)))
-      .catch(err => dispatch(LoginRejected(formatErrMessage(err))));
+    e.preventDefault();
   };
 
   if (isLoading) {

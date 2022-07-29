@@ -1,19 +1,11 @@
-import { loginAxiosInstance, registerAxiosInstance } from "../axios";
+import { axiosUser } from "../apiUser";
 
-export const registerUserService = async (data) => {
-  registerAxiosInstance()
-    .post("/", data)
-    .then(res => res.data)
-    .catch(err => {
-      throw new Error(err.response.data.message)
-    });
+export const createUserAPIHandler = async (data) => {
+  const response = await axiosUser.post("/", data)
+  return response.data;
 };
 
-export const loginUserService = async (data) => {
-  return loginAxiosInstance()
-    .post("/", data)
-    .then(res => res.data)
-    .catch(err => {
-      throw new Error(err.response.data.message)
-    });
+export const loginUserAPIHandler = async (data) => {
+  const response = await axiosUser.post("/login", data);
+  return response.data;
 };

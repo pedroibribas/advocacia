@@ -1,0 +1,21 @@
+import { MdLogout } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../helpers/hooks/useAuth";
+import { Button } from "./styles";
+
+export const LogoutButton = () => {
+  const { logoutUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    logoutUser();
+    navigate("/login");
+    window.location.reload();
+  };
+
+  return (
+    <Button onClick={handleClick}>
+      Sair <MdLogout />
+    </Button>
+  );
+};

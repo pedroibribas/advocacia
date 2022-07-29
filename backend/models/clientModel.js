@@ -15,6 +15,10 @@ const clientSchema = mongoose.Schema(
         type: String,
       },
     },
+    lawsuitNumber: {
+      type: String,
+      default: 'Não informado'
+    },
     securityNumber: {
       type: String,
       default: 'Não informado'

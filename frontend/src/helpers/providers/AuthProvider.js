@@ -1,14 +1,26 @@
-import { useEffect, useReducer } from "react";
+import { useReducer } from "react";
+import { loginUserAPIHandler } from "../../api/services/user";
+import { LoginFulfilled, LoginRejected, Logout } from "../actions/AuthActions";
 import { AuthContext, INITIAL_STATE } from "../contexts/AuthContext";
 import AuthReducer from "../reducers/AuthReducer";
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
-  useEffect(() => {
-    const formatedUser = JSON.stringify(state.user);
-    localStorage.setItem('user', formatedUser);
-  }, [state.user]);
+  const loginUser = (userData) => {
+    loginUserAPIHandler(userData)
+      .then(res => {
+        const formatedUser = JSON.stringify(res);
+        localStorage.setItem('user', formatedUser);
+        dispatch(LoginFulfilled(res));
+      })
+      .catch(err => dispatch(LoginRejected(err.response.data.message)));
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem('user');
+    dispatch(Logout());
+  };
 
   return (
     <AuthContext.Provider value={{
@@ -17,7 +29,9 @@ export const AuthProvider = ({ children }) => {
       isError: state.isError,
       isLoading: state.isLoading,
       message: state.message,
-      dispatch
+      dispatch,
+      loginUser,
+      logoutUser
     }}>
       {children}
     </AuthContext.Provider>

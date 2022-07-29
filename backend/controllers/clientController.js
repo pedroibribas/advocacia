@@ -14,6 +14,7 @@ const setClient = asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
+    lawsuitNumber,
     securityNumber,
     rgNumber,
     rgOrigin,
@@ -48,6 +49,7 @@ const setClient = asyncHandler(async (req, res) => {
       firstName,
       lastName
     },
+    lawsuitNumber,
     securityNumber,
     registerNumber: {
       rgNumber,
@@ -142,6 +144,7 @@ const updateClient = asyncHandler(async (req, res) => {
   if (req.body.countryCode) client.phone.countryCode = req.body.countryCode;
   if (req.body.areaCode) client.phone.areaCode = req.body.areaCode;
   if (req.body.phoneNumber) client.phone.phoneNumber = req.body.phoneNumber;
+  if (req.body.lawsuitNumber) client.lawsuitNumber = req.body.lawsuitNumber;
   if (req.body.securityNumber) client.securityNumber = req.body.securityNumber;
   if (req.body.nationality) client.nationality = req.body.nationality;
   if (req.body.email) client.email = req.body.email;

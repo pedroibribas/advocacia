@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
 
   :root {
     // Colors
-    --clr-bg: #d5d5d5; // paper
+    --clr-bg: #d5d5d5;
     --clr-bg-alt: #373737;
     --clr-bg-navbar: #fff;
     --clr-bg-container: #fff;
@@ -32,10 +32,6 @@ export const GlobalStyle = createGlobalStyle`
     --clr-txt-light: #9099a2;
     --clr-acc-primary: #6d7993;
     --clr-acc-secondary: #96858f;
-
-    // Sizes
-    --h-navbar: 4rem;
-    --w-navbar: 1120px;
   }
 
   body {
