@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import { getClientsAPIHandler } from "../../api/services/clients";
 import { ClientsContext } from "../contexts/ClientsContext";
+import { createClientAPIHandler, getClientsAPIHandler } from "../../api/services/clients";
 import { useAuth } from "../hooks/useAuth";
 
 export const ClientsProvider = ({ children }) => {
   const { user } = useAuth();
   const [clients, setClients] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [state, setState] = useState({
+    isSuccess: false,
+    isError: false,
+    message: '',
+  });
 
   useEffect(() => {
     if (user) {
@@ -22,14 +27,36 @@ export const ClientsProvider = ({ children }) => {
     }
   }, [user]);
 
-  console.log(searchResults);
+  const createClient = (clientData) => {
+    createClientAPIHandler(clientData)
+      .then(res => setState({ isSuccess: true, isError: false, message: res.message }))
+      .catch(err =>
+        setState({
+          isSuccess: false,
+          isError: true,
+          message: err.response.data.message
+        })
+      )
+  };
+
+  const resetState = () => {
+    setState({
+      isSuccess: false,
+      isError: false,
+      message: '',
+    });
+  }
 
   return (
     <ClientsContext.Provider value={{
       clients,
-      setClients,
       searchResults,
-      setSearchResults
+      state,
+      setClients,
+      setSearchResults,
+      setState,
+      createClient,
+      resetState,
     }}>
       {children}
     </ClientsContext.Provider>

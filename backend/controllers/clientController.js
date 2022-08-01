@@ -14,33 +14,34 @@ const setClient = asyncHandler(async (req, res) => {
   const {
     firstName,
     lastName,
-    lawsuitNumber,
+    gender,
+    civilStatus,
+    nationality,
+    job,
     securityNumber,
     rgNumber,
     rgOrigin,
     birthDay,
     birthMonth,
     birthYear,
-    nationality,
     street,
     addressNumber,
     cityArea,
     city,
+    state,
     country,
     postalCode,
     countryCode,
     areaCode,
     phoneNumber,
     email,
-    civilStatus,
-    job,
-    income,
+    lawsuitNumber,
     description
   } = req.body;
 
   if (!firstName || !lastName) {
     res.status(400);
-    throw new Error('É necessário um nome e um sobrenome para efetuar a solicitação');
+    throw new Error('É necessário um nome e um sobrenome');
   };
 
   const data = {
@@ -49,7 +50,10 @@ const setClient = asyncHandler(async (req, res) => {
       firstName,
       lastName
     },
-    lawsuitNumber,
+    gender,
+    civilStatus,
+    nationality,
+    job,
     securityNumber,
     registerNumber: {
       rgNumber,
@@ -60,12 +64,13 @@ const setClient = asyncHandler(async (req, res) => {
       birthMonth,
       birthYear
     },
-    nationality,
+
     address: {
       street,
       cityArea,
       addressNumber,
       city,
+      state,
       country,
       postalCode,
     },
@@ -73,12 +78,9 @@ const setClient = asyncHandler(async (req, res) => {
       countryCode,
       areaCode,
       phoneNumber
-    }
-    ,
+    },
     email,
-    civilStatus,
-    job,
-    income,
+    lawsuitNumber,
     description
   };
 

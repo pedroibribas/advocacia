@@ -27,7 +27,7 @@ export const SearchBar = () => {
     <Container onSubmit={handleSubmit}>
       <input
         type='text'
-        placeholder="Insira aqui os termos da pesquisa"
+        placeholder="Insira aqui o nome do cliente"
         onChange={handleSearchChange}
       />
       <IconContainer>

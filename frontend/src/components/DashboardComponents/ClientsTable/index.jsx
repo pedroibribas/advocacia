@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useClients } from "../../../helpers/hooks/useClients";
 import { formatDate } from "../../../helpers/utils/formatDate";
@@ -5,6 +6,16 @@ import { Container } from "./styles";
 
 export const ClientsTable = () => {
   const { searchResults } = useClients();
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const reverseArr = arr => {
+      const newArr = arr.reverse();
+      return newArr;
+    };
+    const reversedArr = reverseArr(searchResults);
+    setData(reversedArr);
+  }, [searchResults]);
 
   return (
     <Container>
@@ -18,7 +29,7 @@ export const ClientsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {searchResults.map(client => (
+          {data.map(client => (
             <tr key={client._id}>
               <td>{client.name.firstName} {client.name.lastName}</td>
               <td>{client.lawsuitNumber}</td>

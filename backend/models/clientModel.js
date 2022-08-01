@@ -15,7 +15,19 @@ const clientSchema = mongoose.Schema(
         type: String,
       },
     },
-    lawsuitNumber: {
+    gender: {
+      type: String,
+      default: 'Não informado'
+    },
+    civilStatus: {
+      type: String,
+      default: 'Não informado'
+    },
+    nationality: {
+      type: String,
+      default: 'Brasileira'
+    },
+    job: {
       type: String,
       default: 'Não informado'
     },
@@ -37,22 +49,15 @@ const clientSchema = mongoose.Schema(
       birthDay: {
         type: Number,
         default: 0,
-        required: false
       },
       birthMonth: {
         type: Number,
         default: 0,
-        required: false
       },
       birthYear: {
         type: Number,
         default: 0,
-        required: false
       },
-    },
-    nationality: {
-      type: String,
-      default: 'Brasileira'
     },
     address: {
       street: {
@@ -65,9 +70,13 @@ const clientSchema = mongoose.Schema(
       },
       cityArea: {
         type: String,
-        default: 'Não informadom'
+        default: 'Não informado'
       },
       city: {
+        type: String,
+        default: 'Não informado'
+      },
+      state: {
         type: String,
         default: 'Não informado'
       },
@@ -91,29 +100,21 @@ const clientSchema = mongoose.Schema(
       },
       phoneNumber: {
         type: Number,
-        default: 00000000
+        default: 0
       }
     },
     email: {
       type: String,
       default: 'Não informado'
     },
-    civilStatus: {
+    lawsuitNumber: {
       type: String,
       default: 'Não informado'
-    },
-    job: {
-      type: String,
-      default: 'Não informado'
-    },
-    income: {
-      type: Number,
-      default: 0
     },
     description: {
       type: String,
       default: 'Não informado'
-    }
+    },
   },
   {
     timestamps: true
