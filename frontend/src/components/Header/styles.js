@@ -19,9 +19,10 @@ export const Content = styled.div`
 
 export const Overlay = styled.div`
   position: fixed;
+  z-index: 9;
   width: 100vw;
   height: calc(100vh - 4.5rem);
-  background: rgba(0,0,0,0.25);
+  background: rgba(0,0,0,0.5);
 `;
 
 export const RightContainer = styled.div`

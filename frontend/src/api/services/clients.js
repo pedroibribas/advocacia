@@ -15,8 +15,8 @@ export const getClientAPIHandler = async (id) => {
   return response.data;
 };
 
-export const updateClientAPIHandler = async (id) => {
-  const response = await axiosClient.patch("/" + id);
+export const updateClientAPIHandler = async (id, data) => {
+  const response = await axiosClient.patch("/" + id, data);
   return response.data;
 };
 

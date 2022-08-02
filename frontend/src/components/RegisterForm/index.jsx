@@ -84,7 +84,19 @@ export const RegisterForm = () => {
   };
 
   const handleSubmit = e => {
+    const checkData = (obj) => {
+      Object.keys(obj).forEach(key => {
+        // Change input value if it's ''
+        if (obj[key] === '') {
+          obj[key] = 'Não informado';
+        };
+        return obj;
+      });
+    };
+
+    checkData(formData);
     createClient(formData);
+
     e.preventDefault();
   };
 
