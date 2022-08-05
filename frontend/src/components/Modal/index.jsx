@@ -1,6 +1,6 @@
 import { ModalContainer, Overlay } from "./styles";
 
-export const Modal = ({ text, handleClose, handleConfirmation }) => {
+export const Modal = ({ text, handleClose, handleConfirm }) => {
   return (
     <>
       <Overlay onClick={handleClose} />
@@ -8,7 +8,7 @@ export const Modal = ({ text, handleClose, handleConfirmation }) => {
       <ModalContainer>
         <span>{text}</span>
         <div>
-          <button onClick={handleConfirmation}>Sim</button>
+          <button onClick={handleConfirm}>Sim</button>
           <button onClick={handleClose}>Não</button>
         </div>
       </ModalContainer>

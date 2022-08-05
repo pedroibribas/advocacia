@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClients } from "../../helpers/providers/ClientsProvider";
+import { validateFormData } from "../../helpers/utils/validators";
+import { Modal } from "../Modal";
 import { EditForm } from "./EditForm";
-import { Container, Overlay, Modal } from "./styles";
+import { Container } from "./styles";
 
 const INITIAL_STATE = {
   firstName: '',
@@ -33,59 +35,53 @@ const INITIAL_STATE = {
 };
 
 export const EditContent = () => {
-  const { updateClient } = useClients();
-
+  // Form's
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const [isModal, setIsModal] = useState(false);
 
+  // Modal's
+  const { updateClient } = useClients();
+  const [isModal, setIsModal] = useState(false);
   const path = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
 
-  const handleOpenModalClick = () => {
+  // Form Handler
+  const handleChange = e => {
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  // Modal Handlers
+
+  const handleOpenModal = () => {
     setIsModal(true);
   };
 
-  const handleConfirmClick = async () => {
-    const checkData = (obj) => {
-      Object.keys(obj).forEach(key => {
-        if (obj[key] === '') {
-          obj[key] = 'Não informado';
-        };
-        return obj;
-      });
-    };
-
-    checkData(formData);
-    await updateClient(path, formData);
-    navigate("/client/" + path);
+  const handleCloseModal = () => {
+    setIsModal(false);
   };
 
-  const handleCloseModalClick = () => {
-    setIsModal(false);
+  const handleConfirm = async () => {
+    validateFormData(formData);
+    await updateClient(path, formData);
+    navigate("/client/" + path);
   };
 
   return (
     <Container>
       <EditForm
         formData={formData}
-        setFormData={setFormData}
         path={path}
-        handleOpenModalClick={handleOpenModalClick}
+        handleChange={handleChange}
+        handleOpenModal={handleOpenModal}
       />
-
       {isModal && (
-        <>
-          <Overlay onClick={handleCloseModalClick} />
-          <Modal>
-            <span>
-              Você confirma o envio dos dados atualizados?
-            </span>
-            <div>
-              <button onClick={handleConfirmClick}>Sim</button>
-              <button onClick={handleCloseModalClick}>Não</button>
-            </div>
-          </Modal>
-        </>
+        <Modal
+          text='Você confirma o envio dos dados atualizados?'
+          handleClose={handleCloseModal}
+          handleConfirm={handleConfirm}
+        />
       )}
     </Container>
   );

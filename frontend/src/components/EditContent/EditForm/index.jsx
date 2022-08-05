@@ -7,23 +7,14 @@ import { PersonalDataSet } from "../../Fieldsets/PersonalDataSet";
 import { PhoneDataSet } from "../../Fieldsets/PhoneDataSet";
 import { ButtonContainer, Container } from "./styles";
 
-export const EditForm = ({ formData, setFormData, path, handleOpenModalClick }) => {
+export const EditForm = ({ formData, path, handleChange, handleOpenModal }) => {
   const navigate = useNavigate();
 
-  const handleChange = e => {
-    setFormData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const handleCancelClick = () => {
+  const handleCancel = () => {
     navigate("/client/" + path);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-  };
+  const handleSubmit = e => e.preventDefault();
 
   return (
     <Container>
@@ -35,8 +26,8 @@ export const EditForm = ({ formData, setFormData, path, handleOpenModalClick }) 
         <EmailDataSet formData={formData} handleChange={handleChange} />
         <HistoricDataSet formData={formData} handleChange={handleChange} />
         <ButtonContainer>
-          <button onClick={handleOpenModalClick}>Atualizar</button>
-          <button onClick={handleCancelClick}>Cancelar</button>
+          <button onClick={handleOpenModal}>Atualizar</button>
+          <button onClick={handleCancel}>Cancelar</button>
         </ButtonContainer>
       </form>
     </Container>
