@@ -1,96 +1,71 @@
-import { useEffect, useState } from "react";
-import { ClientsContext } from "../contexts/ClientsContext";
+import { useContext, useEffect, useState } from "react";
 import { createClientAPIHandler, deleteClientAPIHandler, getClientAPIHandler, getClientsAPIHandler, updateClientAPIHandler } from "../../api/services/clients";
-import { useAuth } from "../hooks/useAuth";
+import { ClientsContext, INITIAL_STATE } from "../contexts/ClientsContext";
 
 export const ClientsProvider = ({ children }) => {
-  const { user } = useAuth();
-  const [clients, setClients] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
-  const [currClient, setCurrClient] = useState({});
-  const [state, setState] = useState({
-    isSuccess: false,
-    isError: false,
-    message: '',
-  });
+  const [clients, setClients] = useState(INITIAL_STATE);
+  const [searchResult, setSearchResult] = useState([]);
+  const [client, setClient] = useState({});
 
+  // Get Clients
   useEffect(() => {
-    if (user) {
-      getClientsAPIHandler()
-        .then(res => {
-          setClients(res);
-          return res;
-        })
-        .then(res => {
-          setSearchResults(res);
-        })
-        .catch(err => console.log(err.response.data.message));
-    }
-  }, [user]);
-
-  const createClient = (clientData) => {
-    createClientAPIHandler(clientData)
-      .then(res => setState({ isSuccess: true, isError: false, message: res.message }))
-      .catch(err =>
-        setState({
-          isSuccess: false,
-          isError: true,
-          message: err.response.data.message
-        })
-      )
-  };
-
-  const getClient = (clientId) => {
-    getClientAPIHandler(clientId)
-      .then(res => setCurrClient(res))
-      .catch(err => console.log(err.response.data.message));
-  };
-
-  const updateClient = (clientId, clientData) => {
-    updateClientAPIHandler(clientId, clientData)
+    getClientsAPIHandler()
       .then(res => {
-        setCurrClient(res);
+        setClients(res);
         return res;
       })
-      .then(res => setState({ isSuccess: true, isError: false, message: res.message }))
-      .catch(err =>
-        setState({
-          isSuccess: false,
-          isError: true,
-          message: err.response.data.message
-        })
-      )
+      .then(res => setSearchResult(res))
+      .catch(err => console.log(err.response.data));
+  }, []);
+
+  // Create Client
+  const createClient = async (data) => {
+    await createClientAPIHandler(data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
-  const deleteClient = (clientId) => {
-    deleteClientAPIHandler(clientId)
-      .then(res => setState({ isSuccess: true, isError: false, message: res.message }));
+
+  // Get Client
+  const getClient = async (id) => {
+    await getClientAPIHandler(id)
+      .then(res => setClient(res))
+      .catch(err => console.log(err));
   };
 
-  const resetState = () => {
-    setState({
-      isSuccess: false,
-      isError: false,
-      message: '',
-    });
-  }
+  // Update Client
+  const updateClient = async (id, data) => {
+    await updateClientAPIHandler(id, data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
+  // Delete Client
+  const deleteClient = async (id) => {
+    await deleteClientAPIHandler(id)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
+
+  const providerData = {
+    clients,
+    searchResult,
+    client,
+    setSearchResult,
+    getClient,
+    createClient,
+    updateClient,
+    deleteClient,
+  };
 
   return (
-    <ClientsContext.Provider value={{
-      clients,
-      searchResults,
-      currClient,
-      state,
-      setClients,
-      setSearchResults,
-      setState,
-      createClient,
-      getClient,
-      updateClient,
-      deleteClient,
-      resetState,
-    }}>
+    <ClientsContext.Provider value={providerData}>
       {children}
     </ClientsContext.Provider>
   );
+};
+
+export const useClients = () => {
+  const context = useContext(ClientsContext);
+  return context;
 };

@@ -48,15 +48,15 @@ const clientSchema = mongoose.Schema(
     birth: {
       birthDay: {
         type: Number,
-        default: 0,
+        default: 01,
       },
       birthMonth: {
         type: Number,
-        default: 0,
+        default: 01,
       },
       birthYear: {
         type: Number,
-        default: 0,
+        default: 1900,
       },
     },
     address: {

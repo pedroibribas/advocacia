@@ -32,6 +32,8 @@ export const GlobalStyle = createGlobalStyle`
     --clr-txt-light: #9099a2;
     --clr-acc-primary: #6d7993;
     --clr-acc-secondary: #96858f;
+    // Fonts
+    --font-serif: 'Source Serif Pro';
   }
 
   body {

@@ -1,16 +1,19 @@
-import { ClientsTable } from "../../components/DashboardComponents/ClientsTable";
+import { ClientsSummary } from "../../components/ClientsSummary";
 import { Header } from "../../components/Header";
 import { SearchBar } from "../../components/SearchBar";
-import { Container, Dashboard } from "./styles";
+import { Container, Content } from "./styles";
 
 export const Home = () => {
   return (
-    <Container>
+    <>
       <Header />
-      <Dashboard>
-        <SearchBar />
-        <ClientsTable />
-      </Dashboard>
-    </Container>
+
+      <Container>
+        <Content>
+          <SearchBar />
+          <ClientsSummary />
+        </Content>
+      </Container>
+    </>
   );
 };

@@ -21,6 +21,6 @@ export const updateClientAPIHandler = async (id, data) => {
 };
 
 export const deleteClientAPIHandler = async (id) => {
-  const response = await axiosClient.delete(`/` + id);
+  const response = await axiosClient.delete("/" + id);
   return response.data;
 };

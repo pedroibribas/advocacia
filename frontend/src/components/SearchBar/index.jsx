@@ -1,9 +1,9 @@
-import { useClients } from "../../helpers/hooks/useClients";
 import { MdSearch } from "react-icons/md";
+import { useClients } from "../../helpers/providers/ClientsProvider";
 import { Container, IconContainer } from "./styles";
 
 export const SearchBar = () => {
-  const { clients, setSearchResults } = useClients();
+  const { clients, setSearchResult } = useClients();
 
   const handleSubmit = e => e.preventDefault();
 
@@ -11,7 +11,7 @@ export const SearchBar = () => {
     const value = e.target.value.toLowerCase();
 
     if (!value) {
-      setSearchResults(clients);
+      setSearchResult(clients);
     }
 
     const resultArr = clients.filter(
@@ -20,7 +20,7 @@ export const SearchBar = () => {
         client.name.lastName.toLowerCase().includes(value)
     );
 
-    setSearchResults(resultArr);
+    setSearchResult(resultArr);
   };
 
   return (

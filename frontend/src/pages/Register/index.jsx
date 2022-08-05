@@ -1,5 +1,5 @@
 import { Header } from "../../components/Header";
-import { RegisterForm } from "../../components/RegisterForm";
+import { CreateClientForm } from "../../components/CreateClientForm";
 import { Container } from "./styles";
 
 export const Register = () => {
@@ -8,7 +8,7 @@ export const Register = () => {
       <Header />
       <Container>
         <h1>Cadastramento de cliente</h1>
-        <RegisterForm />
+        <CreateClientForm />
       </Container>
     </>
   )
