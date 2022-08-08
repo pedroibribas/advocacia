@@ -6,41 +6,37 @@ import { Modal } from "../Modal";
 import { EditForm } from "./EditForm";
 import { Container } from "./styles";
 
-const INITIAL_STATE = {
-  firstName: '',
-  lastName: '',
-  gender: '',
-  civilStatus: '',
-  nationality: 'Brasileira',
-  job: '',
-  securityNumber: '',
-  rgNumber: '',
-  rgOrigin: '',
-  birthDay: 1,
-  birthMonth: 1,
-  birthYear: 1900,
-  street: '',
-  addressNumber: 0,
-  cityArea: '',
-  city: '',
-  state: 'SP',
-  country: "Brasil",
-  postalCode: '',
-  countryCode: 55,
-  areaCode: 0,
-  phoneNumber: 0,
-  email: '',
-  lawsuitNumber: '',
-  description: ''
-};
-
 export const EditContent = () => {
-  // Form's
-  const [formData, setFormData] = useState(INITIAL_STATE);
-
-  // Modal's
-  const { updateClient } = useClients();
+  const { client, updateClient } = useClients();
+  const [formData, setFormData] = useState({
+    firstName: client?.name?.firstName,
+    lastName: client?.name?.lastName,
+    gender: client?.gender,
+    civilStatus: client?.civilStatus,
+    nationality: client?.nationality,
+    job: client?.job,
+    securityNumber: client?.securityNumber,
+    rgNumber: client?.registerNumber?.rgNumber,
+    rgOrigin: client?.registerNumber?.rgOrigin,
+    birthDay: client?.birth?.birthDay,
+    birthMonth: client?.birth?.birthMonth,
+    birthYear: client?.birth?.birthYear,
+    street: client?.address?.street,
+    addressNumber: client?.address?.addressNumber,
+    cityArea: client?.address?.cityArea,
+    city: client?.address?.city,
+    state: client?.address?.state,
+    country: client?.address?.country,
+    postalCode: client?.address?.postalCode,
+    countryCode: client?.phone?.countryCode,
+    areaCode: client?.phone?.areaCode,
+    phoneNumber: client?.phone?.phoneNumber,
+    email: client?.email,
+    lawsuitNumber: client?.lawsuitNumber,
+    description: client?.description,
+  });
   const [isModal, setIsModal] = useState(false);
+
   const path = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
 
