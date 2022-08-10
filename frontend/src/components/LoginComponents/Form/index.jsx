@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { LoginPending } from "../../../helpers/actions/AuthActions";
-import { useAuth } from "../../../helpers/hooks/useAuth";
+import { loginPending } from "../../../helpers/contexts/AuthContext";
+import { useAuth } from "../../../helpers/providers/AuthProvider";
 import { Loader } from "../../Loader";
 import { Container, FormControl, FormGroup } from "./styles";
 
@@ -37,7 +37,7 @@ export const Form = () => {
   const handleSubmit = (e) => {
     const userData = { email, password };
 
-    dispatch(LoginPending());
+    dispatch(loginPending());
     loginUser(userData);
 
     e.preventDefault();

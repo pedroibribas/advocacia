@@ -1,8 +1,6 @@
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import { loginUserAPIHandler } from "../../api/services/user";
-import { LoginFulfilled, LoginRejected, Logout } from "../actions/AuthActions";
-import { AuthContext, INITIAL_STATE } from "../contexts/AuthContext";
-import AuthReducer from "../reducers/AuthReducer";
+import { AuthContext, AuthReducer, INITIAL_STATE, loginFulfilled, loginRejected, logout } from "../contexts/AuthContext";
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
@@ -12,28 +10,35 @@ export const AuthProvider = ({ children }) => {
       .then(res => {
         const formatedUser = JSON.stringify(res);
         localStorage.setItem('user', formatedUser);
-        dispatch(LoginFulfilled(res));
+        dispatch(loginFulfilled(res));
       })
-      .catch(err => dispatch(LoginRejected(err.response.data.message)));
+      .catch(err => dispatch(loginRejected(err.response.data.message)));
   };
 
   const logoutUser = () => {
     localStorage.removeItem('user');
-    dispatch(Logout());
+    dispatch(logout());
+  };
+
+  const providerData = {
+    user: state.user,
+    isSuccess: state.isSuccess,
+    isError: state.isError,
+    isLoading: state.isLoading,
+    message: state.message,
+    dispatch,
+    loginUser,
+    logoutUser
   };
 
   return (
-    <AuthContext.Provider value={{
-      user: state.user,
-      isSuccess: state.isSuccess,
-      isError: state.isError,
-      isLoading: state.isLoading,
-      message: state.message,
-      dispatch,
-      loginUser,
-      logoutUser
-    }}>
+    <AuthContext.Provider value={providerData}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  return context;
 };

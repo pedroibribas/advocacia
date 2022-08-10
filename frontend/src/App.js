@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import { useAuth } from "./helpers/hooks/useAuth";
-import { AuthProvider } from "./helpers/providers/AuthProvider";
+import { AuthProvider, useAuth } from "./helpers/providers/AuthProvider";
+import { ClientsProvider } from './helpers/providers/ClientsProvider';
 import { Client } from './pages/Client';
 import { Edit } from './pages/Edit';
 import { Login } from "./pages/Login";
@@ -11,7 +11,6 @@ import { Register } from './pages/Register';
 // Styles
 import { GlobalStyle } from "./styles/global";
 import 'react-toastify/dist/ReactToastify.css';
-import { ClientsProvider } from './helpers/providers/ClientsProvider';
 
 function App() {
   const { user } = useAuth();

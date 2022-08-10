@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../helpers/providers/AuthProvider";
 import { LogoutButton } from "./LogoutButton";
-import { useAuth } from "../../helpers/hooks/useAuth";
 import { Container, Content, HamburgerButton, Menu, Overlay, RightContainer, SettingsButton } from "./styles";
 
 export const Header = () => {

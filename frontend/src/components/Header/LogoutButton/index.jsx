@@ -1,6 +1,6 @@
 import { MdLogout } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../helpers/hooks/useAuth";
+import { useAuth } from "../../../helpers/providers/AuthProvider";
 import { Button } from "./styles";
 
 export const LogoutButton = () => {
