@@ -17,6 +17,10 @@
         background: #fff;
       }
 
+      main {
+        margin: 2rem 2rem 0;
+      }
+
       table {
         width: 100%;
         border: 1px solid black;
@@ -51,29 +55,52 @@
       }
 
       .historic {
+        min-height: 250px;
+        padding: 1rem;
+        border: 1px solid #000;
         margin-top: 2rem;
       }
 
       .historic span {
-        padding: 0.5rem;
-        border: 1px solid #000;
-        border-bottom: 1px solid transparent;
         font-size: 0.9rem;
         font-weight: 700;
       }
 
       .historic p {
-        min-height: 250px;
-        padding: 2rem 0.5rem;
-        border: 1px solid black;
         font-size: 0.9rem;
         white-space: pre-wrap;
+      }
+
+      .signature-field {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .signature-field div {
+        max-width: 250px;
+        margin: 0 auto;
+        border-bottom: 1px solid #000;
+        text-align: left;
+      }
+
+      .signature-field span {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 0;
+        right: 0.5rem;
+        width: 100%;
+        margin-top: 2rem;
+        font-size: 0.7rem;
+        text-align: right;
       }
     </style>
   </head>
   <body>
-    <header>Header</header>
-
     <main>
       <h1>Cadastro</h1>
 
@@ -163,11 +190,19 @@
       </section>
 
       <section class="historic">
-        <span>Histórico</span>
+        <span>Histórico:</span>
         <p><%= data.description %></p>
       </section>
 
-      <div>Data: <%= data.createdAt %></div>
+      <div class="signature-field">
+        <div>&#8594;</div>
+        <span><%= data.name.firstName %> <%= data.name.lastName %></span>
+      </div>
     </main>
+
+    <footer>
+      documento gerado em <%= new Intl.DateTimeFormat("pt-br").format(new
+      Date(data.createdAt)) %>
+    </footer>
   </body>
 </html>
