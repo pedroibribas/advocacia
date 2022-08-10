@@ -1,23 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdOutlinePrint } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getPDFAPIHandler } from "../../api/services/pdf";
 import { useClients } from "../../helpers/providers/ClientsProvider";
 import { ClientData } from "./ClientData";
 import { EditButton } from "./EditButton";
 import { Container, Content, DeleteButton, Modal, OptionsContainer, Overlay } from "./styles";
 
-//TODO
-// - Modal
-// - Exclusão do cadastro
-// - Botão de geração do pdf
-
 export const ClientContent = () => {
-  const { deleteClient } = useClients();
+  const { client, getClient, deleteClient } = useClients();
 
   const [isModal, setIsModal] = useState(false);
 
   const path = useLocation().pathname.split('/')[2];
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getClient(path);
+  }, [getClient, path]);
+
+  const handleSavePDF = () => {
+    return getPDFAPIHandler(client).then(res => {
+      const blob = new Blob([res], { type: 'application/pdf' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'document.pdf';
+      link.click();
+    }).catch(err => console.log(err));
+  };
 
   const handleDeleteClick = () => {
     setIsModal(true);
@@ -38,10 +48,12 @@ export const ClientContent = () => {
       <Content>
         <OptionsContainer>
           <EditButton />
-          <button><MdOutlinePrint /></button>
+          <button onClick={handleSavePDF}>
+            <MdOutlinePrint />
+          </button>
         </OptionsContainer>
 
-        <ClientData />
+        <ClientData client={client} />
 
         <DeleteButton onClick={handleDeleteClick}>
           Excluir

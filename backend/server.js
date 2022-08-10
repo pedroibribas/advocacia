@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/clients', require('./routes/clientRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/pdf', require('./routes/pdfRoute'));
 
 app.use(errorHandler);
 
