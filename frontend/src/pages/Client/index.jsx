@@ -8,7 +8,7 @@ export const Client = () => {
       <Header />
 
       <Container>
-        <h1>Cadastro</h1>
+        <h1>Dados cadastrais</h1>
         <ClientContent />
       </Container>
     </>

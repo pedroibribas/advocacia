@@ -13,9 +13,9 @@ export const ClientTable = ({ currClient }) => {
   const phone = `${countryCode} (${areaCode}) ${phoneNumber}`;
 
   // Check birth date
-  const dynamicDate = `${birthYear}-${birthMonth}-${birthDay}`;
-  const dateParam = currClient?.birth ? dynamicDate : '1900-1-1';
-  const formatedBirthDate = dateParam === '1900-1-1' ? 'Data não informada' : formatDate(dateParam);
+  const dynamicParam = `${birthYear}-${birthMonth}-${birthDay}`;
+  const dateParam = currClient?.birth ? dynamicParam : null;
+  const formatedBirthDate = !dateParam ? '00/00/0000' : formatDate(dateParam);
 
   return (
     <Container>

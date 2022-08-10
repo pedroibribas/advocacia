@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
 margin-top: 2rem;
-padding: 0 0.5rem;
 font-family: var(--font-serif), serif;
 
   span {

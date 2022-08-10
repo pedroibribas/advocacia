@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #FFF;
-  padding: 0 0.5rem;
 
   table {
     width: 100%;

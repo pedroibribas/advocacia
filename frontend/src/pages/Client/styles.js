@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: relative;
-  padding: 4rem 0 10rem;
+  padding: 4rem 1rem 10rem;
   background: #FFF;
 
   h1 {

@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { MdOutlinePrint } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getPDFAPIHandler } from "../../api/services/pdf";
 import { useClients } from "../../helpers/providers/ClientsProvider";
+import { LoadingAlert } from "../LoadingAlert";
+import { Modal } from "../Modal";
 import { ClientData } from "./ClientData";
-import { EditButton } from "./EditButton";
-import { Container, Content, DeleteButton, Modal, OptionsContainer, Overlay } from "./styles";
+import { ButtonsContainer, Container, Content, DeleteButton, EditButton, PDFButton } from "./styles";
 
 export const ClientContent = () => {
   const { client, getClient, deleteClient } = useClients();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
   const path = useLocation().pathname.split('/')[2];
@@ -19,25 +20,36 @@ export const ClientContent = () => {
     getClient(path);
   }, [getClient, path]);
 
+  // Save PDF Handler
   const handleSavePDF = () => {
+    setIsLoading(true);
+
     return getPDFAPIHandler(client).then(res => {
       const blob = new Blob([res], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = 'document.pdf';
       link.click();
-    }).catch(err => console.log(err));
+
+      setIsLoading(false);
+    }).catch(err => {
+      setIsLoading(false);
+      console.log(err);
+    });
   };
 
+  // Delete Handler
   const handleDeleteClick = () => {
     setIsModal(true);
   };
 
-  const handleDenyClick = () => {
+  // Modal Handlers
+
+  const handleCloseModal = () => {
     setIsModal(false);
   };
 
-  const handleConfirmClick = async () => {
+  const handleConfirm = async () => {
     await deleteClient(path);
     navigate('/');
     window.location.reload();
@@ -46,34 +58,27 @@ export const ClientContent = () => {
   return (
     <Container>
       <Content>
-        <OptionsContainer>
-          <EditButton />
-          <button onClick={handleSavePDF}>
-            <MdOutlinePrint />
-          </button>
-        </OptionsContainer>
-
+        <ButtonsContainer>
+          <EditButton>
+            <Link to={'/client/edit/' + path}>Editar</Link>
+          </EditButton>
+          <DeleteButton onClick={handleDeleteClick}>Excluir</DeleteButton>
+        </ButtonsContainer>
         <ClientData client={client} />
-
-        <DeleteButton onClick={handleDeleteClick}>
-          Excluir
-        </DeleteButton>
+        <PDFButton onClick={handleSavePDF}>Download PDF</PDFButton>
       </Content>
 
+      {isLoading && (
+        <LoadingAlert text={'O documento está sendo preparado'} />
+      )}
+
       {isModal && (
-        <>
-          <Overlay />
-          <Modal>
-            <span>
-              Você realmente deseja excluir os dados cadastrais desse cliente?
-            </span>
-            <div>
-              <button onClick={handleConfirmClick}>Sim</button>
-              <button onClick={handleDenyClick}>Não</button>
-            </div>
-          </Modal>
-        </>
+        <Modal
+          text="Você confirma a exclusão dos dados cadastrais?"
+          handleClose={handleCloseModal}
+          handleConfirm={handleConfirm}
+        />
       )}
     </Container>
-  );
+  )
 };

@@ -5,6 +5,5 @@ export const Loader = () => {
     <LoaderContainer>
       <LoaderContent />
     </LoaderContainer>
-
   );
 };

@@ -18,7 +18,7 @@
       }
 
       main {
-        margin: 2rem 2rem 0;
+        margin: 4rem 2rem 0;
       }
 
       table {
@@ -97,12 +97,13 @@
         margin-top: 2rem;
         font-size: 0.7rem;
         text-align: right;
+        line-height: 2;
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Cadastro</h1>
+      <h1>Dados cadastrais</h1>
 
       <section>
         <table>
@@ -195,14 +196,14 @@
       </section>
 
       <div class="signature-field">
-        <div>&#8594;</div>
+        <div>x</div>
         <span><%= data.name.firstName %> <%= data.name.lastName %></span>
       </div>
     </main>
 
     <footer>
       documento gerado em <%= new Intl.DateTimeFormat("pt-br").format(new
-      Date(data.createdAt)) %>
+      Date()) %>
     </footer>
   </body>
 </html>
