@@ -1,14 +1,12 @@
-import { Form } from "../../components/LoginComponents/Form";
-import { Container, Content, FormContainer } from "./styles";
+import { LoginForm } from "../../components/LoginForm";
+import { Container, Content } from "./styles";
 
 export const Login = () => {
   return (
     <Container>
       <Content>
         <h2>Entrar</h2>
-        <FormContainer>
-          <Form />
-        </FormContainer>
+        <LoginForm />
       </Content>
     </Container>
   );

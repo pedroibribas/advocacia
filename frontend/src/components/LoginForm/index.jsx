@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginPending } from "../../../helpers/contexts/AuthContext";
-import { useAuth } from "../../../helpers/providers/AuthProvider";
-import { Loader } from "../../Loader";
-import { Container, FormControl, FormGroup } from "./styles";
+import { loginPending } from "../../helpers/contexts/AuthContext";
+import { useAuth } from "../../helpers/providers/AuthProvider";
+import { FormControl, FormGroup, LoaderContainer, LoaderContent } from "./styles";
 
-export const Form = () => {
+export const LoginForm = () => {
   const { user, isSuccess, isLoading, isError, message, dispatch, loginUser } = useAuth();
+
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: 'password'
   });
+
   const { email, password } = formData;
   const navigate = useNavigate();
 
@@ -24,7 +25,6 @@ export const Form = () => {
       navigate("/");
       window.location.reload();
     };
-
   }, [user, isSuccess, isError, message, navigate]);
 
   const handleChange = (e) => {
@@ -35,32 +35,26 @@ export const Form = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+
     const userData = { email, password };
 
     dispatch(loginPending());
     loginUser(userData);
-
-    e.preventDefault();
   };
 
-  if (isLoading) {
-    return (
-      <Loader />
-    );
-  }
-
   return (
-    <Container onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <FormGroup>
         <label>Email</label>
         <FormControl>
           <input
-            type='email'
+            type="email"
             id="email"
             required
             placeholder="ex.: joaosilva@dominio.com"
             onChange={handleChange}
-            name='email'
+            name="email"
             value={email}
           />
         </FormControl>
@@ -69,7 +63,7 @@ export const Form = () => {
         <label>Senha</label>
         <FormControl>
           <input
-            type='password'
+            type="password"
             id="password"
             required
             onChange={handleChange}
@@ -78,9 +72,16 @@ export const Form = () => {
           />
         </FormControl>
       </FormGroup>
+
+      {isLoading && (
+        <LoaderContainer>
+          <LoaderContent />
+        </LoaderContainer>
+      )}
+
       <FormGroup>
         <button type="submit">Enviar</button>
       </FormGroup>
-    </Container>
-  );
+    </form>
+  )
 };

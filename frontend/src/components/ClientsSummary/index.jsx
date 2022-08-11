@@ -6,9 +6,6 @@ import { Container } from "./styles";
 export const ClientsSummary = () => {
   const { searchResult } = useClients();
 
-  //TODO
-  // - Ordenar clientes do mais novo para o mais antigo
-
   return (
     <Container>
       <table>
