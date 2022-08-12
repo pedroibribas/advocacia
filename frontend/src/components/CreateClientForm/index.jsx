@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useClients } from "../../helpers/providers/ClientsProvider";
@@ -42,7 +42,6 @@ export const CreateClientForm = () => {
     lawsuitNumber: '',
     description: ''
   });
-  const formRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -81,18 +80,10 @@ export const CreateClientForm = () => {
         lawsuitNumber: '',
         description: ''
       }));
-
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth"
-      });
-
-      toast.success(message);
       dispatchClientStates(reset());
+      window.location.replace("/");
     };
   }, [dispatchClientStates, isError, isSuccess, message]);
-
 
   const handleChange = e => {
     setFormData(prevState => ({
@@ -113,7 +104,7 @@ export const CreateClientForm = () => {
 
   return (
     <Container>
-      <form ref={formRef} onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <PersonalDataSet formData={formData} handleChange={handleChange} />
         <BirthDataSet formData={formData} handleChange={handleChange} />
         <AddressDataSet formData={formData} handleChange={handleChange} />

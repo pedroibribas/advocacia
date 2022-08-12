@@ -1,39 +1,56 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getPDFAPIHandler } from "../../api/services/pdf";
 import { useClients } from "../../helpers/providers/ClientsProvider";
+import { reset } from "../../helpers/reducers/ClientStatesReducer";
 import { ConfirmAlert } from "../ModalComponents/ConfirmAlert";
+import { Loader } from "../ModalComponents/Loader";
 import { LoadingAlert } from "../ModalComponents/LoadingAlert";
 import { ClientData } from "./ClientData";
 import { ButtonsContainer, Container, Content, DeleteButton, EditButton, PDFButton } from "./styles";
 
 export const ClientContent = () => {
-  const { client, getClient, deleteClient } = useClients();
-
-  const [isLoading, setIsLoading] = useState(false);
+  const { clientStatesState, dispatchClientStates, client, getClient, deleteClient } = useClients();
+  const { isError, isSuccess, message } = clientStatesState;
+  const [clientIsLoading, setClientIsLoading] = useState(false);
+  const [PDFIsLoading, setPDFIsLoading] = useState(false);
   const [isModal, setIsModal] = useState(false);
-
   const path = useLocation().pathname.split('/')[2];
-  const navigate = useNavigate();
 
   useEffect(() => {
-    getClient(path);
-  }, [getClient, path]);
+    if (!client) {
+      getClient(path);
+      setClientIsLoading(true);
+    } else {
+      setClientIsLoading(false);
+    };
+  }, [getClient, path, client]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+      dispatchClientStates(reset());
+    };
+
+    if (isSuccess) {
+      window.location.replace("/");
+    };
+  }, [dispatchClientStates, isError, isSuccess, message]);
 
   // Save PDF Handler
-  const handleSavePDF = () => {
-    setIsLoading(true);
-
-    return getPDFAPIHandler(client).then(res => {
+  const handleSavePDF = async () => {
+    setPDFIsLoading(true);
+    return await getPDFAPIHandler(client).then(res => {
       const blob = new Blob([res], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = 'document.pdf';
       link.click();
 
-      setIsLoading(false);
+      setPDFIsLoading(false);
     }).catch(err => {
-      setIsLoading(false);
+      setPDFIsLoading(false);
       console.log(err);
     });
   };
@@ -51,8 +68,6 @@ export const ClientContent = () => {
 
   const handleConfirm = async () => {
     await deleteClient(path);
-    navigate('/');
-    window.location.reload();
   };
 
   return (
@@ -68,8 +83,12 @@ export const ClientContent = () => {
         <PDFButton onClick={handleSavePDF}>Download PDF</PDFButton>
       </Content>
 
-      {isLoading && (
-        <LoadingAlert text={'O documento está sendo preparado'} />
+      {clientIsLoading && (<Loader />)}
+
+      {PDFIsLoading && (
+        <LoadingAlert
+          text={'O documento está sendo preparado'}
+        />
       )}
 
       {isModal && (

@@ -6,7 +6,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 956px;
-  margin: 2rem auto 6rem;
+  margin: 2rem auto 0;
 `;
 
 export const ButtonsContainer = styled.div`
@@ -42,7 +42,7 @@ export const DeleteButton = styled.button`
 export const PDFButton = styled.button`
   display: block;
   height: 2.5rem;
-  margin: 0.5rem auto 0;
+  margin: 2rem auto 0;
   padding: 0 2rem;
   background-color: var(--clr-acc-primary);
   color: var(--clr-txt-alt);

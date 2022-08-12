@@ -1,10 +1,16 @@
-import { Container } from "./styles";
+import { Container, Content, Title } from "./styles";
 
 export const ClientHistoric = ({ description }) => {
+  const paragraphs = description?.split("\n");
+
   return (
     <Container>
-      <span>Histórico</span>
-      <p>{description}</p>
+      <Title>Histórico</Title>
+      <Content>
+        {paragraphs?.map((par, i) => (
+          <p key={i}>{par}</p>
+        ))}
+      </Content>
     </Container>
   );
 };

@@ -11,7 +11,7 @@ export const ClientsProvider = ({ children }) => {
   });
   const [clients, setClients] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
-  const [client, setClient] = useState({});
+  const [client, setClient] = useState(null);
 
   // Get Clients
   useEffect(() => {
@@ -48,8 +48,11 @@ export const ClientsProvider = ({ children }) => {
   // Delete Client
   const deleteClient = async (id) => {
     await deleteClientAPIHandler(id)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => {
+        setClient(null);
+        dispatchClientStates(clientSuccess(res.message))
+      })
+      .catch(err => dispatchClientStates(clientError(err.response.data.message)));
   };
 
   const providerData = {

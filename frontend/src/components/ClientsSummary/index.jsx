@@ -4,7 +4,7 @@ import { formatDate } from "../../helpers/utils/formatDate";
 import { Container } from "./styles";
 
 export const ClientsSummary = () => {
-  const { searchResult } = useClients();
+  const { searchResult, setClient } = useClients();
 
   return (
     <Container>
@@ -31,7 +31,7 @@ export const ClientsSummary = () => {
                 {formatDate(client.createdAt)}
               </td>
               <td>
-                <Link to={"/client/" + client._id}>Ver</Link>
+                <Link to={"/client/" + client._id} onClick={() => setClient(null)}>Ver</Link>
               </td>
             </tr>
           ))}
