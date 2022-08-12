@@ -1,32 +1,15 @@
 import styled from "styled-components"
 
-export const Overlay = styled.div`
-  position: fixed;
-  z-index: 99;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.5);
-`
-
-export const ModalContainer = styled.div`
+export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  position: fixed;
-  top: calc(50% - 5rem);
-  left: calc(50% - 15rem);
-  z-index: 999;
-
-  height: 10rem;
-  width: 30rem;
-  margin: 0 auto;
-  padding: 0 2rem;
+  padding: 2.5rem 2rem;
+  border-radius: 0.5rem;
   background-color: #FFF;
   color: var(--clr-txt);
+  box-shadow: 1px 1px 10px rgba(0,0,0,0.25);
 
   span {
     width: 400px;

@@ -44,7 +44,6 @@ export const LoaderContainer = styled.div`
   width: 40px;
   height: 40px;
   margin: 1rem auto 0;
-  /* background: #000; */
 `;
 
 export const LoaderContent = styled.div`

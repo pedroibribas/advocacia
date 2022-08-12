@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useClients } from "../../helpers/providers/ClientsProvider";
 import { validateFormData } from "../../helpers/utils/validators";
-import { Modal } from "../Modal";
+import { ConfirmAlert } from "../ModalComponents/ConfirmAlert";
 import { EditForm } from "./EditForm";
 import { Container } from "./styles";
 
@@ -73,7 +73,7 @@ export const EditContent = () => {
         handleOpenModal={handleOpenModal}
       />
       {isModal && (
-        <Modal
+        <ConfirmAlert
           text='Você confirma o envio dos dados atualizados?'
           handleClose={handleCloseModal}
           handleConfirm={handleConfirm}

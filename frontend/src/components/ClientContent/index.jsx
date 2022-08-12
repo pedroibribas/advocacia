@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getPDFAPIHandler } from "../../api/services/pdf";
 import { useClients } from "../../helpers/providers/ClientsProvider";
-import { LoadingAlert } from "../LoadingAlert";
-import { Modal } from "../Modal";
+import { ConfirmAlert } from "../ModalComponents/ConfirmAlert";
+import { LoadingAlert } from "../ModalComponents/LoadingAlert";
 import { ClientData } from "./ClientData";
 import { ButtonsContainer, Container, Content, DeleteButton, EditButton, PDFButton } from "./styles";
 
@@ -73,7 +73,7 @@ export const ClientContent = () => {
       )}
 
       {isModal && (
-        <Modal
+        <ConfirmAlert
           text="Você confirma a exclusão dos dados cadastrais?"
           handleClose={handleCloseModal}
           handleConfirm={handleConfirm}

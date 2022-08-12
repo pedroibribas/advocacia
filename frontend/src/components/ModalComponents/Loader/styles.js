@@ -1,19 +1,6 @@
 import styled from 'styled-components'
 
-export const LoaderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99999;
-  background-color: rgba(0, 0, 0, 0.25);
-`
-
-export const LoaderContent = styled.div`
+export const Content = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
@@ -22,7 +9,8 @@ export const LoaderContent = styled.div`
   @keyframes run {
     0%,
     100% {
-      box-shadow: 0em -2.6em 0em 0em #ffffff,
+      box-shadow: 
+        0em -2.6em 0em 0em #ffffff,
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
@@ -32,7 +20,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.7);
     }
     12.5% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.7),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.7),
         1.8em -1.8em 0 0em #ffffff, 
         2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
@@ -42,7 +31,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.5);
     }
     25% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.5),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.5),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.7), 
         2.5em 0em 0 0em #ffffff,
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
@@ -52,7 +42,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
     }
     37.5% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.5),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.7), 
         1.75em 1.75em 0 0em #ffffff,
@@ -62,7 +53,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
     }
     50% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.5),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.7), 
@@ -72,7 +64,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
     }
     62.5% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.5),
@@ -82,7 +75,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
     }
     75% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),
@@ -92,7 +86,8 @@ export const LoaderContent = styled.div`
         -1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2);
     }
     87.5% {
-      box-shadow: 0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
+      box-shadow: 
+        0em -2.6em 0em 0em rgba(255, 255, 255, 0.2),
         1.8em -1.8em 0 0em rgba(255, 255, 255, 0.2),
         2.5em 0em 0 0em rgba(255, 255, 255, 0.2),
         1.75em 1.75em 0 0em rgba(255, 255, 255, 0.2),

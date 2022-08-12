@@ -1,13 +1,14 @@
-import { Content, Loader, Message, Overlay, Title } from "./styles";
+import { ModalBG } from "../ModalBG";
+import { Content, Loader, Message, Title } from "./styles";
 
 export const LoadingAlert = ({ text }) => {
   return (
-    <Overlay>
+    <ModalBG>
       <Content>
         <Title>Alerta</Title>
         <Message>{text}</Message>
         <Loader />
       </Content>
-    </Overlay>
+    </ModalBG>
   );
 };
