@@ -6,11 +6,11 @@ import { Client } from './pages/Client';
 import { Edit } from './pages/Edit';
 import { Login } from "./pages/Login";
 import { Home } from './pages/Home';
-import { Register } from './pages/Register';
 
 // Styles
 import { GlobalStyle } from "./styles/global";
 import 'react-toastify/dist/ReactToastify.css';
+import { Create } from './pages/Create';
 
 function App() {
   const { user } = useAuth();
@@ -22,7 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={user ? <Home /> : <Login />} />
             <Route path="/login" element={user ? <Home /> : <Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/create" element={<Create />} />
             <Route path="/client/:id" element={<Client />} />
             <Route path="/client/edit/:id" element={<Edit />} />
           </Routes>

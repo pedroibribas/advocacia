@@ -42,7 +42,7 @@ export const Header = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/register">Criar novo cadastro</Link>
+                <Link to="/create">Criar novo cadastro</Link>
               </li>
             </ul>
           </Menu>

@@ -2,7 +2,7 @@ import { Header } from "../../components/Header";
 import { CreateClientForm } from "../../components/CreateClientForm";
 import { Container } from "./styles";
 
-export const Register = () => {
+export const Create = () => {
   return (
     <>
       <Header />

@@ -27,9 +27,5 @@ export const Container = styled.fieldset`
     border: 1px solid var(--clr-txt-light);
     font-size: 1rem;
     font-weight: 500;
-
-    &:focus {
-      border: 2px solid orange;
-    }
   }
 `;

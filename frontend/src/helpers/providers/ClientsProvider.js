@@ -1,9 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { createClientAPIHandler, deleteClientAPIHandler, getClientAPIHandler, getClientsAPIHandler, updateClientAPIHandler } from "../../api/services/clients";
-import { ClientsContext, INITIAL_STATE } from "../contexts/ClientsContext";
+import { ClientsContext } from "../contexts/ClientsContext";
+import { clientError, ClientStatesReducer, clientSuccess } from "../reducers/ClientStatesReducer";
 
 export const ClientsProvider = ({ children }) => {
-  const [clients, setClients] = useState(INITIAL_STATE);
+  const [clientStatesState, dispatchClientStates] = useReducer(ClientStatesReducer, {
+    isError: false,
+    isSuccess: false,
+    message: ''
+  });
+  const [clients, setClients] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [client, setClient] = useState({});
 
@@ -21,10 +27,9 @@ export const ClientsProvider = ({ children }) => {
   // Create Client
   const createClient = async (data) => {
     await createClientAPIHandler(data)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => dispatchClientStates(clientSuccess(res.message)))
+      .catch(err => dispatchClientStates(clientError(err.response.data.message)));
   };
-
 
   // Get Client
   const getClient = async (id) => {
@@ -52,6 +57,8 @@ export const ClientsProvider = ({ children }) => {
     searchResult,
     client,
     setSearchResult,
+    clientStatesState,
+    dispatchClientStates,
     getClient,
     createClient,
     updateClient,
