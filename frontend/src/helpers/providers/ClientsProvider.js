@@ -13,16 +13,20 @@ export const ClientsProvider = ({ children }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [client, setClient] = useState(null);
 
-  // Get Clients
   useEffect(() => {
-    getClientsAPIHandler()
+    getClients();
+  }, []);
+
+  // Get Clients
+  const getClients = async () => {
+    await getClientsAPIHandler()
       .then(res => {
         setClients(res);
         return res;
       })
       .then(res => setSearchResult(res))
       .catch(err => console.log(err.response.data));
-  }, []);
+  };
 
   // Create Client
   const createClient = async (data) => {
@@ -62,6 +66,7 @@ export const ClientsProvider = ({ children }) => {
     setSearchResult,
     clientStatesState,
     dispatchClientStates,
+    getClients,
     getClient,
     createClient,
     updateClient,

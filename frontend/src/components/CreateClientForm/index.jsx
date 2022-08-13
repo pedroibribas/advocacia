@@ -13,7 +13,7 @@ import { PhoneDataSet } from "../Fieldsets/PhoneDataSet";
 import { ButtonContainer, Container } from "./styles";
 
 export const CreateClientForm = () => {
-  const { clientStatesState, dispatchClientStates, createClient } = useClients();
+  const { getClients, clientStatesState, dispatchClientStates, createClient } = useClients();
   const { isError, isSuccess, message } = clientStatesState;
   const [formData, setFormData] = useState({
     firstName: '',
@@ -52,38 +52,12 @@ export const CreateClientForm = () => {
     };
 
     if (isSuccess) {
-      setFormData(prevState => ({
-        ...prevState,
-        firstName: '',
-        lastName: '',
-        gender: '',
-        civilStatus: '',
-        nationality: 'Brasileira',
-        job: '',
-        securityNumber: '',
-        rgNumber: '',
-        rgOrigin: '',
-        birthDay: 1,
-        birthMonth: 1,
-        birthYear: 1900,
-        street: '',
-        addressNumber: 0,
-        cityArea: '',
-        city: '',
-        state: 'SP',
-        country: "Brasil",
-        postalCode: '',
-        countryCode: 55,
-        areaCode: 0,
-        phoneNumber: 0,
-        email: '',
-        lawsuitNumber: '',
-        description: ''
-      }));
+      toast.success(message);
       dispatchClientStates(reset());
-      window.location.replace("/");
+      getClients();
+      navigate("/");
     };
-  }, [dispatchClientStates, isError, isSuccess, message]);
+  }, [dispatchClientStates, isError, isSuccess, message, getClients, navigate]);
 
   const handleChange = e => {
     setFormData(prevState => ({
