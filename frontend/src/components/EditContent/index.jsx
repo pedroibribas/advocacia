@@ -43,8 +43,6 @@ export const EditContent = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getClient(path);
-
     if (isError) {
       toast.error(message);
       dispatchClientStates(reset());
@@ -53,6 +51,7 @@ export const EditContent = () => {
     if (isSuccess) {
       toast.success(message);
       dispatchClientStates(reset());
+      getClient(path);
       navigate("/client/" + path);
     };
   }, [isError, isSuccess, message, dispatchClientStates, getClient, navigate, path]);
