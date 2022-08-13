@@ -11,12 +11,13 @@ import { ClientData } from "./ClientData";
 import { ButtonsContainer, Container, Content, DeleteButton, EditButton, PDFButton } from "./styles";
 
 export const ClientContent = () => {
-  const { clientStatesState, dispatchClientStates, client, getClient, deleteClient } = useClients();
+  const { clientStatesState, dispatchClientStates, client, getClients, getClient, deleteClient } = useClients();
   const { isError, isSuccess, message } = clientStatesState;
   const [clientIsLoading, setClientIsLoading] = useState(false);
   const [PDFIsLoading, setPDFIsLoading] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const path = useLocation().pathname.split('/')[2];
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!client) {
@@ -34,9 +35,12 @@ export const ClientContent = () => {
     };
 
     if (isSuccess) {
-      window.location.replace("/");
+      toast.success(message);
+      dispatchClientStates(reset());
+      getClients();
+      navigate("/");
     };
-  }, [dispatchClientStates, isError, isSuccess, message]);
+  }, [dispatchClientStates, isError, isSuccess, message, getClients, navigate]);
 
   // Save PDF Handler
   const handleSavePDF = async () => {
