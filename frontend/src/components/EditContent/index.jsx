@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useClients } from "../../helpers/providers/ClientsProvider";
+import { reset } from "../../helpers/reducers/ClientStatesReducer";
 import { validateFormData } from "../../helpers/utils/validators";
 import { ConfirmAlert } from "../ModalComponents/ConfirmAlert";
 import { EditForm } from "./EditForm";
 import { Container } from "./styles";
 
 export const EditContent = () => {
-  const { client, updateClient } = useClients();
+  const { client, getClient, clientStatesState, dispatchClientStates, updateClient } = useClients();
+  const { isError, isSuccess, message } = clientStatesState;
   const [formData, setFormData] = useState({
     firstName: client?.name?.firstName,
     lastName: client?.name?.lastName,
@@ -36,9 +39,24 @@ export const EditContent = () => {
     description: client?.description,
   });
   const [isModal, setIsModal] = useState(false);
-
   const path = useLocation().pathname.split('/')[3];
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getClient(path);
+
+    if (isError) {
+      toast.error(message);
+      dispatchClientStates(reset());
+    };
+
+    if (isSuccess) {
+      toast.success(message);
+      dispatchClientStates(reset());
+      navigate("/client/" + path);
+    };
+  }, [isError, isSuccess, message, dispatchClientStates, getClient, navigate, path]);
+
 
   // Form Handler
   const handleChange = e => {
@@ -61,7 +79,6 @@ export const EditContent = () => {
   const handleConfirm = async () => {
     validateFormData(formData);
     await updateClient(path, formData);
-    navigate("/client/" + path);
   };
 
   return (

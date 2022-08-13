@@ -41,8 +41,8 @@ export const ClientsProvider = ({ children }) => {
   // Update Client
   const updateClient = async (id, data) => {
     await updateClientAPIHandler(id, data)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => dispatchClientStates(clientSuccess(res.message)))
+      .catch(err => dispatchClientStates(clientError(err.reponse.data.message)));
   };
 
   // Delete Client
