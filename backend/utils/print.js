@@ -7,7 +7,14 @@ const printPDF = async (html) => {
   await page.setContent(html);
   const buffer = await page.pdf({
     format: "A4",
-    printBackground: true
+    printBackground: true,
+    displayHeaderFooter: true,
+    margin: {
+      top: '64px',
+      bottom: '64px',
+      left: '32px',
+      right: '32px',
+    }
   });
 
   await browser.close();

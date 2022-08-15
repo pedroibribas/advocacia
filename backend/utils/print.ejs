@@ -9,7 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@300;400;600;700&display=swap"
       rel="stylesheet"
     />
-    <title>Documento PDF</title>
+    <title>Documento de Impressão</title>
 
     <style>
       body {
@@ -17,8 +17,8 @@
         background: #fff;
       }
 
-      main {
-        margin: 4rem 2rem 0;
+      section {
+        margin-top: 2rem;
       }
 
       table {
@@ -57,22 +57,22 @@
       .historic {
         min-height: 250px;
         padding: 1rem;
-        border: 1px solid #000;
-        margin-top: 2rem;
+      }
+
+      .historic p {
+        display: block;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
       }
 
       .historic span {
+        display: block;
         font-size: 0.9rem;
         font-weight: 700;
       }
 
-      .historic p {
-        font-size: 0.9rem;
-        white-space: pre-wrap;
-      }
-
       .signature-field {
-        margin-top: 2rem;
         text-align: center;
       }
 
@@ -89,15 +89,10 @@
         text-transform: uppercase;
       }
 
-      footer {
-        position: absolute;
-        bottom: 0;
-        right: 0.5rem;
-        width: 100%;
-        margin-top: 2rem;
-        font-size: 0.7rem;
-        text-align: right;
-        line-height: 2;
+      @media print {
+        p {
+          page-break-inside: avoid;
+        }
       }
     </style>
   </head>
@@ -191,19 +186,13 @@
       </section>
 
       <section class="historic">
-        <span>Histórico:</span>
-        <p><%= data.description %></p>
+        <p><span>Histórico:</span><%= data.description %></p>
       </section>
 
-      <div class="signature-field">
+      <section class="signature-field">
         <div>x</div>
         <span><%= data.name.firstName %> <%= data.name.lastName %></span>
-      </div>
+      </section>
     </main>
-
-    <footer>
-      documento gerado em <%= new Intl.DateTimeFormat("pt-br").format(new
-      Date()) %>
-    </footer>
   </body>
 </html>
