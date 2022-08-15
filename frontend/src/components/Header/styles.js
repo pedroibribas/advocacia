@@ -9,26 +9,21 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
 
+  position: relative;
   max-width: 1420px;
   height: 4.5rem;
   margin: 0 auto;
   padding: 0 1rem;
 `;
 
-export const Overlay = styled.div`
-  position: fixed;
-  z-index: 9;
-  width: 100vw;
-  height: calc(100vh - 4.5rem);
-  background: rgba(0,0,0,0.5);
-`;
-
-export const RightContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
+export const VersionDesc = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 1rem;
+  font-size: 10px;
+  color: #a0a0a0;
 `;
 
 export const HamburgerButton = styled.button`
@@ -39,14 +34,20 @@ export const HamburgerButton = styled.button`
   
   div {
     display: block;
-    width: 1.5rem;
+    width: 24px;
     height: 2px;
     background: #FFF;
 
     &:nth-child(2) {
-      margin: 0.25rem 0;
+      margin: 4px 0;
     }
   }
+`;
+
+export const RightContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 `;
 
 export const SettingsButton = styled.button`
@@ -93,4 +94,12 @@ export const Menu = styled.div`
       }
     }
   }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  z-index: 9;
+  width: 100vw;
+  height: calc(100vh - 4.5rem);
+  background: rgba(0,0,0,0.5);
 `;

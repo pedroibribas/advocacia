@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../helpers/providers/AuthProvider";
 import { LogoutButton } from "./LogoutButton";
-import { Container, Content, HamburgerButton, Menu, Overlay, RightContainer, SettingsButton } from "./styles";
+import { Container, Content, HamburgerButton, Menu, Overlay, RightContainer, SettingsButton, VersionDesc } from "./styles";
 
 export const Header = () => {
   const { user } = useAuth();
@@ -23,6 +23,8 @@ export const Header = () => {
   return (
     <Container onClick={handleCloseMenuClick}>
       <Content>
+        <VersionDesc>v. 1.0.0</VersionDesc>
+
         <HamburgerButton onClick={handleOpenMenuClick}>
           <div />
           <div />
